@@ -19,13 +19,20 @@ import math
 
 #mid point circle algorithm
 def drawCircle(mc, x0, y0, z, radius, blockType):
-    blockType2 = block.DIRT
+    blockType2 = block.AIR
+    blockType3 = block.GRASS
     f = 1 - radius
     ddf_x = 1
     ddf_y = -2 * radius
     x = 0
     y = radius
-    sleep = .5
+    sleep = 0 
+    sleep2 = 0 
+    sideSlots = round(radius * .25)
+    slotFilled = dict()
+
+    print "Radius:",radius,", sideSlots:",sideSlots
+
     print "Set the top block"
     mc.setBlock(x0, y0 + radius, z, blockType)
     time.sleep(sleep)
@@ -46,7 +53,7 @@ def drawCircle(mc, x0, y0, z, radius, blockType):
     while y1 < y2:
         mc.setBlock(x0, y1, z, blockType2)
         y1 += 1
-        time.sleep(sleep)
+        time.sleep(sleep2)
 
     counter = 0
 
@@ -62,13 +69,13 @@ def drawCircle(mc, x0, y0, z, radius, blockType):
         counter += 1
         print "x0:",x0,",y0:",y0,",x:",x,",y:",y,",f:",f,",ddf_x:",ddf_x,",ddf_y",ddf_y
 
-        print "Set the blocks to the right and left of the top and bottom blocks"
+        print "Set the blocks to the right and left of the top blocks"
         mc.setBlock(x0 + x, y0 + y, z, blockType)
         time.sleep(sleep)
         mc.setBlock(x0 - x, y0 + y, z, blockType)
         time.sleep(sleep)
 
-        print "What happens here?"
+        print "Set the blocks to the right and left of the bottom blocks"
         mc.setBlock(x0 + x, y0 - y, z, blockType)
         time.sleep(sleep)
         mc.setBlock(x0 - x, y0 - y, z, blockType)
@@ -81,17 +88,35 @@ def drawCircle(mc, x0, y0, z, radius, blockType):
                 mc.setBlock(x0 + x, y1, z, blockType2)
                 mc.setBlock(x0 - x, y1, z, blockType2)
                 y1 += 1
-                time.sleep(sleep)
+                time.sleep(sleep2)
 
-        print "Set the blocks above and below the side blocks"
+        print "Set the blocks above the side blocks"
         mc.setBlock(x0 + y, y0 + x, z, blockType)
         time.sleep(sleep)
         mc.setBlock(x0 - y, y0 + x, z, blockType)
         time.sleep(sleep)
+
+        print "Set the blocks below the side blocks"
         mc.setBlock(x0 + y, y0 - x, z, blockType)
         time.sleep(sleep)
         mc.setBlock(x0 - y, y0 - x, z, blockType)
         time.sleep(sleep)
+        print "y:",y
+        if(radius > y > (radius - sideSlots)):
+            if((x0 + y) in slotFilled):
+                print "slot:",(x0 + y)," is filled already, skip"
+            else:
+                y1 = y0 - x + 1
+                y2 = y0 + x
+                print "Fill the side slot blocks"
+                while y1 < y2:
+                    mc.setBlock(x0 + y, y1, z, blockType3)
+                    mc.setBlock(x0 - y, y1, z, blockType3)
+                    y1 += 1
+                    time.sleep(sleep2)
+
+                # Set the slot hash so you don't fill this slot again
+                slotFilled[(x0 +y)] = 1
 
 #Brensenham line algorithm
 def drawLine(mc, x, y, z, x2, y2, blockType):
@@ -190,17 +215,19 @@ if __name__ == "__main__":
     position = mc.player.getPos()
 
     # Now put the circle 10 blocks ahead on the z axis, y + radius
-    radius = 14
+    radius = 2
     x = position.x
     y = position.y + radius + 1
-    z = position.z + 17
-    clockCentre = minecraft.Vec3(x, y, z)
+    z = position.z + 10
 
-    #Post a message to the minecraft chat window 
-    mc.postToChat("Drawing a circle, center is: x=%s y=%s z=%s" % (int(x), int(y), int(z)))
-    print "Drawing a circle, center is: x=%s y=%s z=%s" % (int(x), int(y), int(z))
+    while(z < 40):
+        clockCentre = minecraft.Vec3(x, y, z)
 
-    lastTime = 0
-    #draw the clock
-    drawClock(mc, clockCentre, radius, lastTime)
-    #loop until Ctrl C is pressed
+        #Post a message to the minecraft chat window 
+        mc.postToChat("Drawing a circle, center is: x=%s y=%s z=%s" % (int(x), int(y), int(z)))
+        print "Drawing a circle, center is: x=%s y=%s z=%s" % (int(x), int(y), int(z))
+        z += 1 
+        radius += 1 
+
+        lastTime = 0
+        drawClock(mc, clockCentre, radius, lastTime)
