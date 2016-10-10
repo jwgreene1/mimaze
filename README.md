@@ -2,7 +2,7 @@
 
 driver
 	init logs
-	read configs command line and from file
+	read configs command line and/or from file
 	start the maze class
 
 maze module
@@ -10,7 +10,7 @@ maze module
 		Init the terrain
 
 	class initMaze
-		build rooms here from vector maps
+		build rooms here from vector maps and/or random rooms/tunnels
 
 	class buildMaze
 		Build a bunch of rooms
@@ -23,8 +23,22 @@ maze module
 		doors[]
 
 	class walls
-		vectors[]
+		blocks[]
+		direction - N, S, E, W to begin, then more complicated NE, SE, etc. for 45 deg walls
+
+	class block
+		x
+		y
+		z
+		blockType
+		blockData
 
 	class doors
 		directon
 		size
+
+	class tunnel
+		radius
+		direction
+		start
+		end
