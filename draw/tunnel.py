@@ -5,6 +5,7 @@ import mcpi.block as block
 import time
 import datetime
 import math
+import sys
 
 
 #mid point circle algorithm
@@ -37,7 +38,7 @@ def createTunnelSegment(mc, x0, y0, z, radius, blockType, torch):
         #print "Setting a torch, x:",x0 + radius,", y:",y0,", z:",z
         mc.setBlock(x0 + radius + 1, y0, z, blockType)
         mc.setBlock(x0 + radius, y0, z, block.TORCH, 1)
-        print "Left Torch block data: ", mc.getBlockWithData(x0 + radius , y0, z)
+        print("Left Torch block data: ", mc.getBlockWithData(x0 + radius , y0, z))
     time.sleep(sleep)
     #print "Set the right block"
     mc.setBlock(x0 - radius, y0, z, blockType)
@@ -45,7 +46,7 @@ def createTunnelSegment(mc, x0, y0, z, radius, blockType, torch):
         #print "Setting a torch, x:",x0 - radius,", y:",y0,", z:",z
         mc.setBlock(x0 - radius - 1, y0, z, blockType)
         mc.setBlock(x0 - radius, y0, z, block.TORCH, 2)
-        print "Right Torch block data: ", mc.getBlockWithData(x0 - radius , y0, z)
+        print("Right Torch block data: ", mc.getBlockWithData(x0 - radius , y0, z))
     time.sleep(sleep)
 
     # Fill the center line
@@ -141,7 +142,7 @@ def createTunnel():
     z = position.z + 1
 
     mc.postToChat("Creating a tunnel, center is: x=%s y=%s z=%s" % (int(x), int(y), int(z)))
-    print "Creating a tunnel, center is: x=%s y=%s z=%s" % (int(x), int(y), int(z))
+    print("Creating a tunnel, center is: x=%s y=%s z=%s" % (int(x), int(y), int(z)))
 
     length = 0
 
