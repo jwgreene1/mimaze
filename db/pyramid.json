@@ -1,0 +1,31 @@
+{
+  "segments": [
+    {
+      "stepWidth": 1,
+      "stepHeight": 2,
+      "blockType": 50,
+      "blockData": 1,
+      "height": 100
+    },
+    {
+      "stepWidth": 1,
+      "stepHeight": 2,
+      "blockType": 51,
+      "blockData": 1,
+      "height": 28
+    },
+    {
+      "stepWidth": 1,
+      "stepHeight": 2,
+      "blockType": 50,
+      "blockData": 1,
+      "height": 128
+    }
+  ],
+  "baseWidth": 256,
+  "center": {
+      "x": 0,
+      "y": -128,
+      "z": 0
+  }
+}

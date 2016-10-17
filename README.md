@@ -23,7 +23,7 @@ maze module
 		doors[]
 
 	class walls
-		blocks[]
+		segments[]
 		direction - N, S, E, W to begin, then more complicated NE, SE, etc. for 45 deg walls
 
 	class block
